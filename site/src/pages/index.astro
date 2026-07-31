@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../config/site";
+import { sitePath } from "../lib/url";
+
+const services = (await getCollection("services")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const articles = (await getCollection("articles"))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+
+const title = `${SITE_NAME} — Home`;
+const description =
+  "Template home page for a static content site focused on technical SEO, E-E-A-T signals, and AI-search visibility.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/">
+  <section aria-labelledby="intro-heading" class="max-w-prose">
+    <h1 id="intro-heading" class="m-0 text-display text-ink">
+      {SITE_NAME}
+    </h1>
+    <p class="mt-4 mb-0 max-w-prose text-body text-secondary">
+      This is a template site. Replace the identity values in site configuration,
+      then publish articles and team profiles through the local CMS.
+    </p>
+  </section>
+
+  {
+    services.length > 0 && (
+      <section aria-labelledby="services-heading" class="mt-16">
+        <h2 id="services-heading" class="m-0 mb-6 text-h2 text-ink">
+          Services
+        </h2>
+        <ul class="m-0 grid list-none gap-3 p-0 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <li class="card">
+              <div class="card-header border-b border-line">
+                <h3 class="m-0 text-small text-ink">{service.data.title}</h3>
+              </div>
+              <div class="card-body">
+                <p class="m-0 text-small text-secondary">{service.data.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section aria-labelledby="latest-heading" class="mt-16">
+    <h2 id="latest-heading" class="m-0 mb-6 text-h2 text-ink">
+      Latest Articles
+    </h2>
+    {
+      articles.length === 0 ? (
+        <p class="m-0 text-body text-muted">No articles published yet.</p>
+      ) : (
+        <ul class="m-0 flex list-none flex-col gap-2 p-0">
+          {articles.map((article) => (
+            <li class="card overflow-hidden">
+              <a
+                href={sitePath(`/articles/${article.data.slug}/`)}
+                class="card-header flex min-h-11 flex-col gap-1 no-underline sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+              >
+                <span class="text-small text-ink">{article.data.title}</span>
+                <span class="shrink-0 text-small text-muted">
+                  {article.data.date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    timeZone: "UTC",
+                  })}
+                </span>
+              </a>
+              <div class="card-body border-t border-line">
+                <p class="m-0 text-small text-secondary">
+                  {article.data.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

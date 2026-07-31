@@ -1,0 +1,45 @@
+---
+import { sitePath } from "../lib/url";
+
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="mb-6">
+  <ol class="m-0 flex list-none flex-wrap items-center gap-x-2 gap-y-1 p-0 text-small text-muted">
+    {
+      items.map((item, index) => (
+        <li class="flex items-center gap-2">
+          {index > 0 && (
+            <span aria-hidden="true" class="text-line">
+              /
+            </span>
+          )}
+          {item.href && index < items.length - 1 ? (
+            <a
+              href={sitePath(item.href)}
+              class="inline-flex min-h-11 items-center text-muted underline-offset-2 hover:text-ink hover:underline"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <span
+              class="inline-flex min-h-11 items-center text-ink"
+              aria-current={index === items.length - 1 ? "page" : undefined}
+            >
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

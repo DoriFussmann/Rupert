@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { sitePath } from "../lib/url";
+
+const title = "Page not found";
+const description =
+  "The page you requested could not be found. Return home or browse articles.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/404/">
+  <section aria-labelledby="not-found-heading" class="max-w-prose">
+    <h1 id="not-found-heading" class="m-0 text-h1 text-ink">
+      Page not found
+    </h1>
+    <p class="mt-4 mb-0 text-body text-secondary">
+      The page you requested does not exist.
+    </p>
+    <nav aria-label="Recovery links" class="mt-8">
+      <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+        <li>
+          <a href={sitePath("/")} class="btn">Home</a>
+        </li>
+        <li>
+          <a href={sitePath("/articles/")} class="btn">Articles</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>

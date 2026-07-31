@@ -1,0 +1,240 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
+import { Image, getImage } from "astro:assets";
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import RelatedLinks from "../components/RelatedLinks.astro";
+import Sources from "../components/Sources.astro";
+import FaqBlock from "../components/FaqBlock.astro";
+import { absoluteUrl, sitePath } from "../lib/url";
+import { SITE_NAME } from "../config/site";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+}
+
+const { article } = Astro.props;
+const data = article.data;
+
+const author = await getEntry("team", data.author);
+if (!author) {
+  throw new Error(
+    `Article "${data.slug}" references unknown team member "${data.author}". ` +
+      `Add a matching entry in the team collection or fix the author slug.`,
+  );
+}
+
+const { Content } = await render(article);
+
+const canonicalPath = data.canonical || `/articles/${data.slug}/`;
+const pagePath = `/articles/${data.slug}/`;
+
+const heroOptimized = await getImage({ src: data.image });
+const ogSource = data.ogImage || data.image;
+const ogOptimized = data.ogImage
+  ? await getImage({ src: data.ogImage })
+  : heroOptimized;
+const ogImageUrl = absoluteUrl(ogOptimized.src);
+
+const resolvedOgTitle = data.ogTitle || data.title;
+const resolvedOgDescription = data.ogDescription || data.description;
+
+const published = data.date.toISOString();
+const modified = data.updatedDate.toISOString();
+
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Articles", href: "/articles/" },
+  { label: data.title },
+];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: absoluteUrl("/"),
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Articles",
+      item: absoluteUrl("/articles/"),
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: data.title,
+      item: absoluteUrl(pagePath),
+    },
+  ],
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: author.data.name,
+  jobTitle: author.data.role,
+  description: author.data.bio,
+  url: absoluteUrl(`/team/#${author.data.slug}`),
+  sameAs: author.data.sameAs ?? [],
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": data.schemaType || "BlogPosting",
+  headline: data.title,
+  description: data.description,
+  datePublished: published,
+  dateModified: modified,
+  author: {
+    "@type": "Person",
+    name: author.data.name,
+    url: absoluteUrl(`/team/#${author.data.slug}`),
+    sameAs: author.data.sameAs ?? [],
+  },
+  image: absoluteUrl(heroOptimized.src),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": absoluteUrl(pagePath),
+  },
+  publisher: {
+    "@type": "Organization",
+    name: SITE_NAME,
+  },
+  inLanguage: data.locale,
+  keywords: data.keywords?.join(", "),
+};
+
+const faqSchema =
+  data.faqs && data.faqs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: data.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonicalPath={canonicalPath}
+  robots={data.robots}
+  locale={data.locale}
+  ogTitle={resolvedOgTitle}
+  ogDescription={resolvedOgDescription}
+  ogImageUrl={ogImageUrl}
+  twitterCard={data.twitterCard}
+  ogType="article"
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={published} />
+    <meta property="article:modified_time" content={modified} />
+    <meta property="article:author" content={author.data.name} />
+    <meta property="article:section" content={data.category} />
+    {data.tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(breadcrumbSchema)}
+    />
+    {
+      faqSchema && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(faqSchema)}
+        />
+      )
+    }
+  </Fragment>
+
+  <article>
+    <div class="max-w-prose">
+      <Breadcrumbs items={breadcrumbItems} />
+      <h1 class="m-0 text-h1 text-ink md:text-display">{data.title}</h1>
+      <p class="mt-4 mb-0 text-small text-muted">
+        Published on {formatDate(data.date)} · Updated on{" "}
+        {formatDate(data.updatedDate)}
+      </p>
+      <p class="mt-2 mb-0 text-small text-muted">
+        By{" "}
+        <a
+          href={sitePath(`/team/#${author.data.slug}`)}
+          class="link-body text-ink"
+        >
+          {author.data.name}
+        </a>
+        {" · "}
+        {data.category}
+      </p>
+
+      <Image
+        src={data.image}
+        alt={data.imageAlt}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 1280px) 100vw, 1280px"
+        loading="eager"
+        class="mt-8 w-full rounded-xl border border-line"
+      />
+    </div>
+
+    <div class="article-body mt-8">
+      <Content />
+    </div>
+
+    <div class="mt-8 max-w-prose space-y-8">
+      {
+        data.image2 && data.image2Alt && (
+          <Image
+            src={data.image2}
+            alt={data.image2Alt}
+            widths={[640, 960]}
+            sizes="(max-width: 960px) 100vw, 960px"
+            loading="lazy"
+            class="w-full rounded-xl border border-line"
+          />
+        )
+      }
+
+      {
+        data.image3 && data.image3Alt && (
+          <Image
+            src={data.image3}
+            alt={data.image3Alt}
+            widths={[640, 960]}
+            sizes="(max-width: 960px) 100vw, 960px"
+            loading="lazy"
+            class="w-full rounded-xl border border-line"
+          />
+        )
+      }
+    </div>
+
+    <AuthorBio author={author} />
+    <RelatedLinks links={data.internalLinks} />
+    <Sources links={data.externalLinks} />
+    <FaqBlock faqs={data.faqs} />
+  </article>
+</BaseLayout>

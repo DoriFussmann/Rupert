@@ -1,0 +1,32 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs?: FaqItem[];
+}
+
+const { faqs = [] } = Astro.props;
+---
+
+{
+  faqs.length > 0 && (
+    <section aria-labelledby="faq-heading" class="mt-12 max-w-prose">
+      <h2 id="faq-heading" class="m-0 mb-4 text-h3 text-ink">
+        Frequently asked questions
+      </h2>
+      <dl class="m-0 flex list-none flex-col gap-2 p-0">
+        {faqs.map((faq) => (
+          <div class="card overflow-hidden">
+            <dt class="card-header m-0 border-b border-line text-small text-ink">
+              {faq.question}
+            </dt>
+            <dd class="card-body m-0 text-body text-secondary">{faq.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )
+}

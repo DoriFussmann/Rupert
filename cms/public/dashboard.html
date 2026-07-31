@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CMS — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="top">
+        <a class="brand" href="/">Rupert <span>CMS</span></a>
+        <nav aria-label="CMS">
+          <ul>
+            <li><a href="/">Articles</a></li>
+            <li><a href="/team.html">Team</a></li>
+            <li><a href="/dashboard.html" aria-current="page">Dashboard</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <h1>Dashboard</h1>
+
+      <main>
+        <section aria-labelledby="health-heading">
+          <h2 id="health-heading">Article health</h2>
+          <p id="status" role="status">Loading…</p>
+          <table>
+            <thead>
+              <tr>
+                <th>title</th>
+                <th>slug</th>
+                <th>draft</th>
+                <th>internalLinks</th>
+                <th>externalLinks</th>
+                <th>faqs</th>
+                <th>updatedDate</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </section>
+      </main>
+
+      <footer class="site-footer">Rupert · © 2026</footer>
+    </div>
+
+    <script type="module">
+      async function api(url) {
+        let res;
+        try {
+          res = await fetch(url);
+        } catch (err) {
+          throw new Error(`Network error: ${err.message}`);
+        }
+        const ct = res.headers.get("content-type") || "";
+        if (!ct.includes("application/json")) {
+          const text = await res.text();
+          throw new Error(`Non-JSON (${res.status}): ${text.slice(0, 200)}`);
+        }
+        const data = await res.json();
+        if (!res.ok || data.ok === false) {
+          throw new Error(data.error || `Request failed (${res.status})`);
+        }
+        return data;
+      }
+
+      const status = document.getElementById("status");
+      const tbody = document.getElementById("rows");
+
+      try {
+        const result = await api("/articles");
+        tbody.innerHTML = "";
+        if (!result.articles.length) {
+          status.textContent = "No articles.";
+        } else {
+          status.textContent = `${result.articles.length} article(s).`;
+          for (const a of result.articles) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${escapeHtml(a.title)}</td>
+              <td>${escapeHtml(a.slug)}</td>
+              <td>${a.draft}</td>
+              <td>${a.internalLinks}</td>
+              <td>${a.externalLinks}</td>
+              <td>${a.faqs}</td>
+              <td>${escapeHtml(String(a.updatedDate))}</td>
+            `;
+            tbody.appendChild(tr);
+          }
+        }
+      } catch (err) {
+        status.textContent = err.message;
+        status.dataset.error = "true";
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+    </script>
+  </body>
+</html>

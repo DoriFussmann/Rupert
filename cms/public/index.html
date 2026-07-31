@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CMS — Articles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="top">
+        <a class="brand" href="/">Rupert <span>CMS</span></a>
+        <nav aria-label="CMS">
+          <ul>
+            <li><a href="/" aria-current="page">Articles</a></li>
+            <li><a href="/team.html">Team</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <h1>Articles</h1>
+
+      <main>
+        <section aria-labelledby="existing-heading">
+          <h2 id="existing-heading">Existing</h2>
+          <ul id="article-list">
+            <li>Loading…</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="md-drop-heading">
+          <h2 id="md-drop-heading">Markdown</h2>
+          <p>Drop a <code>.md</code> file, or choose one.</p>
+          <div id="md-drop" tabindex="0" role="button" aria-label="Markdown drop zone">
+            <p>Drop .md here</p>
+          </div>
+          <input type="file" id="md-file" accept=".md,text/markdown" />
+        </section>
+
+        <section aria-labelledby="missing-heading">
+          <h2 id="missing-heading">Missing fields</h2>
+          <p id="missing-summary">Drop a markdown file to begin.</p>
+        </section>
+
+        <section aria-labelledby="checklist-heading">
+          <h2 id="checklist-heading">Field checklist</h2>
+          <ul id="field-checklist"></ul>
+        </section>
+
+        <section aria-labelledby="form-heading">
+          <h2 id="form-heading">Fields</h2>
+          <form id="article-form">
+            <p>
+              <label>
+                title
+                <input type="text" name="title" id="field-title" />
+              </label>
+              <span id="title-count" aria-live="polite"></span>
+            </p>
+            <p>
+              <label>
+                description
+                <textarea name="description" id="field-description" rows="3"></textarea>
+              </label>
+              <span id="description-count" aria-live="polite"></span>
+            </p>
+            <p>
+              <label>
+                slug
+                <input type="text" name="slug" id="field-slug" />
+              </label>
+            </p>
+            <p>
+              <label>
+                date
+                <input type="date" name="date" id="field-date" />
+              </label>
+            </p>
+            <p>
+              <label>
+                updatedDate
+                <input type="date" name="updatedDate" id="field-updatedDate" />
+              </label>
+            </p>
+            <p>
+              <label>
+                author
+                <select name="author" id="field-author">
+                  <option value="">— select team member —</option>
+                </select>
+              </label>
+            </p>
+            <p>
+              <label>
+                category
+                <input type="text" name="category" id="field-category" />
+              </label>
+            </p>
+            <p>
+              <label>
+                tags (comma-separated, 4–6)
+                <input type="text" name="tags" id="field-tags" />
+              </label>
+            </p>
+            <p>
+              <label>
+                keywords (comma-separated)
+                <input type="text" name="keywords" id="field-keywords" />
+              </label>
+            </p>
+            <p>
+              <label>
+                imageAlt (min 10 chars)
+                <input type="text" name="imageAlt" id="field-imageAlt" />
+              </label>
+            </p>
+            <p>
+              <label>
+                image2Alt
+                <input type="text" name="image2Alt" id="field-image2Alt" />
+              </label>
+            </p>
+            <p>
+              <label>
+                image3Alt
+                <input type="text" name="image3Alt" id="field-image3Alt" />
+              </label>
+            </p>
+            <p>
+              <label>
+                robots
+                <input type="text" name="robots" id="field-robots" value="index, follow" />
+              </label>
+            </p>
+            <p>
+              <label>
+                schemaType
+                <input type="text" name="schemaType" id="field-schemaType" value="BlogPosting" />
+              </label>
+            </p>
+            <p>
+              <label>
+                locale
+                <input type="text" name="locale" id="field-locale" value="en-US" />
+              </label>
+            </p>
+            <p>
+              <label>
+                twitterCard
+                <input type="text" name="twitterCard" id="field-twitterCard" value="summary_large_image" />
+              </label>
+            </p>
+            <p>
+              <label>
+                draft
+                <select name="draft" id="field-draft">
+                  <option value="false">false</option>
+                  <option value="true">true</option>
+                </select>
+              </label>
+            </p>
+            <p>
+              <label>
+                canonical (optional URL)
+                <input type="url" name="canonical" id="field-canonical" />
+              </label>
+            </p>
+            <p>
+              <label>
+                ogTitle (leave blank to fall back to title)
+                <input type="text" name="ogTitle" id="field-ogTitle" />
+              </label>
+            </p>
+            <p>
+              <label>
+                ogDescription (leave blank to fall back to description)
+                <textarea name="ogDescription" id="field-ogDescription" rows="2"></textarea>
+              </label>
+            </p>
+
+            <fieldset>
+              <legend>internalLinks</legend>
+              <div id="internal-links"></div>
+              <button type="button" id="add-internal">Add internal link</button>
+            </fieldset>
+
+            <fieldset>
+              <legend>externalLinks</legend>
+              <div id="external-links"></div>
+              <button type="button" id="add-external">Add external link</button>
+            </fieldset>
+
+            <fieldset>
+              <legend>faqs (optional)</legend>
+              <div id="faqs"></div>
+              <button type="button" id="add-faq">Add FAQ</button>
+            </fieldset>
+
+            <p>
+              <label>
+                body
+                <textarea name="body" id="field-body" rows="12"></textarea>
+              </label>
+            </p>
+          </form>
+        </section>
+
+        <section aria-labelledby="images-heading">
+          <h2 id="images-heading">Images</h2>
+          <p>Up to 3. Max 10MB each. First image is the hero.</p>
+          <p id="image-status"></p>
+          <div id="image-drop" tabindex="0" role="button" aria-label="Image drop zone">
+            <p>Drop images here</p>
+          </div>
+          <input type="file" id="image-file" accept="image/*" multiple />
+        </section>
+
+        <section aria-labelledby="actions-heading">
+          <h2 id="actions-heading">Actions</h2>
+          <p>
+            <label>
+              <input type="checkbox" id="overwrite" />
+              Overwrite existing slug if present
+            </label>
+          </p>
+          <p id="slug-collision" role="status"></p>
+          <p id="generate-reason" role="status"></p>
+          <p id="action-status" role="status" aria-live="polite"></p>
+          <button type="button" id="preview-jsonld">Preview JSON-LD</button>
+          <button type="button" id="generate" disabled>Generate</button>
+        </section>
+
+        <section aria-labelledby="preview-heading">
+          <h2 id="preview-heading">JSON-LD preview</h2>
+          <pre id="jsonld-preview"></pre>
+        </section>
+      </main>
+
+      <footer class="site-footer">Rupert · © 2026</footer>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

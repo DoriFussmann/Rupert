@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const members = await getCollection("team");
+
+const title = "Team";
+const description =
+  "Meet the people behind this site. Profiles include roles, bios, credentials, and professional links.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/team/">
+  <section aria-labelledby="team-heading">
+    <h1 id="team-heading" class="m-0 mb-8 text-h1 text-ink">Team</h1>
+    {
+      members.length === 0 ? (
+        <p class="m-0 text-body text-muted">No team members yet.</p>
+      ) : (
+        <ul class="m-0 grid list-none gap-4 p-0 md:grid-cols-2">
+          {members.map((member) => (
+            <li id={member.data.slug} class="card overflow-hidden">
+              <article>
+                <div class="card-header flex items-start gap-4 border-b border-line">
+                  <Image
+                    src={member.data.photo}
+                    alt={`Photo of ${member.data.name}`}
+                    width={160}
+                    height={160}
+                    loading="lazy"
+                    class="h-20 w-20 shrink-0 rounded-xl border border-line object-cover"
+                  />
+                  <div class="min-w-0">
+                    <h2 class="m-0 text-small text-ink">{member.data.name}</h2>
+                    <p class="mt-1 mb-0 text-small text-muted">
+                      {member.data.role}
+                    </p>
+                    {member.data.credentials && (
+                      <p class="mt-1 mb-0 text-small text-muted">
+                        {member.data.credentials}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="m-0 text-body text-secondary">{member.data.bio}</p>
+                  {member.data.sameAs && member.data.sameAs.length > 0 && (
+                    <ul class="mt-4 mb-0 flex list-none flex-col gap-1 p-0">
+                      {member.data.sameAs.map((url) => (
+                        <li>
+                          <a
+                            href={url}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            class="nav-item w-full justify-start border-line text-left"
+                          >
+                            {url}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

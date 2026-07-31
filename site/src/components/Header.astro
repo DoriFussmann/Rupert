@@ -1,0 +1,79 @@
+---
+import { SITE_NAME } from "../config/site";
+import { sitePath } from "../lib/url";
+
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/articles/", label: "Articles" },
+  { href: "/team/", label: "Team" },
+];
+
+const isCurrent = (href: string) => {
+  if (href === "/") return pathname === "/" || pathname === "";
+  return pathname === href || pathname.startsWith(href);
+};
+---
+
+<header class="border-b border-line bg-background">
+  <div class="shell flex items-center justify-between gap-4 py-3">
+    <p class="m-0 text-brand-mobile text-primary md:text-small">
+      <a
+        href={sitePath("/")}
+        class="inline-flex min-h-11 min-w-11 items-center text-primary no-underline hover:text-primary"
+      >
+        {SITE_NAME}
+      </a>
+    </p>
+
+    {/* Desktop nav */}
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="m-0 flex list-none items-center gap-1 p-0">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={sitePath(link.href)}
+                class="nav-item"
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {/* Mobile nav — CSS-only, no client hydration */}
+    <details class="relative md:hidden group">
+      <summary
+        class="btn btn-compact list-none [&::-webkit-details-marker]:hidden"
+        aria-label="Open menu"
+      >
+        Menu
+      </summary>
+      <nav
+        aria-label="Primary"
+        class="absolute right-0 z-20 mt-2 w-48 rounded-xl border border-line bg-background p-2"
+      >
+        <ul class="m-0 flex list-none flex-col gap-1 p-0">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={sitePath(link.href)}
+                  class="nav-item w-full justify-start text-left"
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

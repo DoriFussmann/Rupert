@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CMS — Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="top">
+        <a class="brand" href="/">Rupert <span>CMS</span></a>
+        <nav aria-label="CMS">
+          <ul>
+            <li><a href="/">Articles</a></li>
+            <li><a href="/team.html" aria-current="page">Team</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <h1>Team</h1>
+
+      <main>
+        <section aria-labelledby="list-heading">
+          <h2 id="list-heading">Existing</h2>
+          <ul id="team-list"><li>Loading…</li></ul>
+        </section>
+
+        <section aria-labelledby="form-heading">
+          <h2 id="form-heading">Member</h2>
+          <form id="team-form">
+            <p>
+              <label>name <input name="name" id="name" required /></label>
+            </p>
+            <p>
+              <label>slug <input name="slug" id="slug" required /></label>
+            </p>
+            <p>
+              <label>role <input name="role" id="role" required /></label>
+            </p>
+            <p>
+              <label>bio <textarea name="bio" id="bio" rows="5" required></textarea></label>
+            </p>
+            <p>
+              <label>credentials (optional) <input name="credentials" id="credentials" /></label>
+            </p>
+            <p>
+              <label>
+                sameAs (one URL per line)
+                <textarea name="sameAs" id="sameAs" rows="3"></textarea>
+              </label>
+            </p>
+            <p>
+              <label>
+                photo
+                <input type="file" name="photo" id="photo" accept="image/*" />
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox" id="overwrite" />
+                Overwrite existing slug
+              </label>
+            </p>
+            <p id="status" role="status" aria-live="polite"></p>
+            <button type="submit" id="save">Save</button>
+          </form>
+        </section>
+      </main>
+
+      <footer class="site-footer">Rupert · © 2026</footer>
+    </div>
+
+    <script type="module">
+      async function api(url, options = {}) {
+        let res;
+        try {
+          res = await fetch(url, options);
+        } catch (err) {
+          throw new Error(`Network error: ${err.message}`);
+        }
+        const ct = res.headers.get("content-type") || "";
+        if (!ct.includes("application/json")) {
+          const text = await res.text();
+          throw new Error(`Non-JSON (${res.status}): ${text.slice(0, 200)}`);
+        }
+        const data = await res.json();
+        if (!res.ok || data.ok === false) {
+          throw new Error(data.error || `Request failed (${res.status})`);
+        }
+        return data;
+      }
+
+      const status = document.getElementById("status");
+      const saveBtn = document.getElementById("save");
+
+      function setStatus(msg, isError = false) {
+        status.textContent = msg;
+        status.dataset.error = isError ? "true" : "false";
+      }
+
+      async function loadList() {
+        const ul = document.getElementById("team-list");
+        try {
+          const result = await api("/api/team");
+          if (!result.team.length) {
+            ul.innerHTML = "<li>No team members yet.</li>";
+            return;
+          }
+          ul.innerHTML = "";
+          for (const m of result.team) {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <a href="#" data-slug="${m.slug}">${m.name}</a> — ${m.role}
+              <button type="button" data-delete="${m.slug}">Delete</button>
+            `;
+            ul.appendChild(li);
+          }
+          ul.querySelectorAll("a[data-slug]").forEach((a) => {
+            a.addEventListener("click", async (e) => {
+              e.preventDefault();
+              const result = await api(`/api/team/${a.dataset.slug}`);
+              const m = result.member;
+              document.getElementById("name").value = m.name || "";
+              document.getElementById("slug").value = m.slug || "";
+              document.getElementById("role").value = m.role || "";
+              document.getElementById("bio").value = m.bio || "";
+              document.getElementById("credentials").value = m.credentials || "";
+              document.getElementById("sameAs").value = (m.sameAs || []).join("\n");
+              document.getElementById("overwrite").checked = true;
+              setStatus(`Loaded ${m.slug}. Upload a new photo to replace the existing one.`);
+            });
+          });
+          ul.querySelectorAll("[data-delete]").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+              const slug = btn.getAttribute("data-delete");
+              if (!confirm(`Delete team member "${slug}"?`)) return;
+              try {
+                saveBtn.disabled = true;
+                setStatus("Deleting…");
+                await api(`/api/team/${slug}`, { method: "DELETE" });
+                await loadList();
+                setStatus(`Deleted ${slug}.`);
+              } catch (err) {
+                setStatus(err.message, true);
+              } finally {
+                saveBtn.disabled = false;
+              }
+            });
+          });
+        } catch (err) {
+          ul.innerHTML = `<li>Error: ${err.message}</li>`;
+        }
+      }
+
+      document.getElementById("team-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+          saveBtn.disabled = true;
+          setStatus("Saving…");
+          const fd = new FormData();
+          const data = {
+            name: document.getElementById("name").value,
+            slug: document.getElementById("slug").value,
+            role: document.getElementById("role").value,
+            bio: document.getElementById("bio").value,
+            credentials: document.getElementById("credentials").value,
+            sameAs: document
+              .getElementById("sameAs")
+              .value.split("\n")
+              .map((s) => s.trim())
+              .filter(Boolean),
+          };
+          fd.append("data", JSON.stringify(data));
+          fd.append("overwrite", document.getElementById("overwrite").checked ? "true" : "false");
+          const photo = document.getElementById("photo").files?.[0];
+          if (photo) fd.append("photo", photo);
+          if (!photo && document.getElementById("overwrite").checked) {
+            const existing = await api(`/api/team/${data.slug}`).catch(() => null);
+            if (existing?.member?.photo) {
+              data.photo = existing.member.photo;
+              fd.set("data", JSON.stringify(data));
+            }
+          }
+          const result = await api("/api/team", { method: "POST", body: fd });
+          await loadList();
+          setStatus(`Saved ${result.slug}.`);
+        } catch (err) {
+          setStatus(err.message, true);
+        } finally {
+          saveBtn.disabled = false;
+        }
+      });
+
+      loadList().then(() => setStatus("Ready.")).catch((err) => setStatus(err.message, true));
+    </script>
+  </body>
+</html>

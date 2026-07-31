@@ -1,0 +1,32 @@
+---
+import { SITE_NAME } from "../config/site";
+import { sitePath, absoluteUrl } from "../lib/url";
+---
+
+<footer class="mt-16 border-t border-line bg-background">
+  <div
+    class="shell flex flex-col gap-3 py-6 text-small text-muted sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="m-0">
+      &copy; {new Date().getFullYear()}
+      {" "}
+      {SITE_NAME}
+    </p>
+    <nav aria-label="Footer">
+      <ul class="m-0 flex list-none flex-wrap items-center gap-1 p-0">
+        <li>
+          <a href={sitePath("/")} class="nav-item">Home</a>
+        </li>
+        <li>
+          <a href={sitePath("/articles/")} class="nav-item">Articles</a>
+        </li>
+        <li>
+          <a href={sitePath("/team/")} class="nav-item">Team</a>
+        </li>
+        <li>
+          <a href={absoluteUrl("/rss.xml")} class="nav-item">RSS</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
