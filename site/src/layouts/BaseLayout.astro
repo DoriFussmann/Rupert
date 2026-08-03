@@ -44,7 +44,9 @@ if (!canonicalPath) {
 
 const resolvedOgTitle = ogTitle || title;
 const resolvedOgDescription = ogDescription || description;
-const canonical = absoluteUrl(canonicalPath);
+const canonical = /^https?:\/\//i.test(canonicalPath)
+  ? canonicalPath
+  : absoluteUrl(canonicalPath);
 
 const organizationSchema = {
   "@context": "https://schema.org",

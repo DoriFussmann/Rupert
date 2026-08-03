@@ -1,8 +1,8 @@
-# Site Name
+# Rupert
 
-> Site Name publishes practical articles on technical SEO, E-E-A-T, and AI-search visibility.
+> Rupert publishes practical articles on technical SEO, E-E-A-T, and AI-search visibility.
 
 ## Articles
 
-- [How to Find Startup Investors That Actually Fit Your Round](https://example.com/articles/how-to-find-investors-for-your-startup-that-actually-fit/): Learn how to find startup investors who match your stage, sector, and vision — not just anyone with capital. A smarter, more targeted approach to fundraising.
-- [How Technical SEO and E-E-A-T Shape Modern Content Sites](https://example.com/articles/technical-seo-eeat-content-sites/): A practical walkthrough of fields, schemas, and linking patterns that help static content sites earn trust with search engines and answer engines.
+- [How to Find Startup Investors That Actually Fit Your Round](https://www.heyrupert.com/articles/how-to-find-investors-for-your-startup-that-actually-fit/): Learn how to find startup investors who match your stage, sector, and vision — not just anyone with capital. A smarter, more targeted approach to fundraising.
+- [How Technical SEO and E-E-A-T Shape Modern Content Sites](https://www.heyrupert.com/articles/technical-seo-eeat-content-sites/): A practical walkthrough of fields, schemas, and linking patterns that help static content sites earn trust with search engines and answer engines.

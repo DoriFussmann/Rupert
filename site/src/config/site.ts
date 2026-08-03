@@ -1,4 +1,3 @@
-// TEMPLATE: replace these three values before deploying a real site.
-export const SITE_URL = "https://example.com";
-export const SITE_NAME = "Site Name";
+export const SITE_URL = "https://www.heyrupert.com";
+export const SITE_NAME = "Rupert";
 export const SAME_AS: string[] = [];
