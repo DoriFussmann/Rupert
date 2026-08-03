@@ -4,7 +4,7 @@ description: A practical walkthrough of fields, schemas, and linking patterns th
 slug: technical-seo-eeat-content-sites
 date: 2026-07-30
 updatedDate: 2026-07-30
-author: alex-rivera
+author: dori-fussmann
 category: Technical SEO
 tags:
   - technical-seo

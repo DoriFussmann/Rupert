@@ -4,7 +4,7 @@ description: A draft seed used only to verify that draft true articles produce z
 slug: draft-should-not-build
 date: 2026-07-30
 updatedDate: 2026-07-30
-author: alex-rivera
+author: dori-fussmann
 category: Internal
 tags:
   - draft

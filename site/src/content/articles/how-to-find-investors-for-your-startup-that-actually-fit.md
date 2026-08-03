@@ -4,7 +4,7 @@ description: Learn how to find startup investors who match your stage, sector, a
 slug: how-to-find-investors-for-your-startup-that-actually-fit
 date: 2026-07-31
 updatedDate: 2026-07-31
-author: alex-rivera
+author: dori-fussmann
 category: General
 tags:
   - investor search
