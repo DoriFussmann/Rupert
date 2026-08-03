@@ -5,5 +5,5 @@
 ## Articles
 
 - [How to Find the Right Investors: A Complete Founder's Guide](https://www.heyrupert.com/articles/how-to-find-investors/): Everything founders need to know about how to find investors: type, targeting, warm intros, cold outreach, and pipeline management to close your round.
-- [How to Find Startup Investors That Actually Fit Your Round](https://www.heyrupert.com/articles/how-to-find-investors-for-your-startup-that-actually-fit/): Learn how to find startup investors who match your stage, sector, and vision — not just anyone with capital. A smarter, more targeted approach to fundraising.
+- [Pitch Deck: The Complete Founder's Guide to Raising Capital](https://www.heyrupert.com/articles/pitch-deck/): What founders need to know about pitch decks: what to include, how to structure slides by stage, and how to get it in front of the right investors.
 - [How Technical SEO and E-E-A-T Shape Modern Content Sites](https://www.heyrupert.com/articles/technical-seo-eeat-content-sites/): A practical walkthrough of fields, schemas, and linking patterns that help static content sites earn trust with search engines and answer engines.
