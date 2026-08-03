@@ -44,19 +44,59 @@
           <input type="file" id="md-file" accept=".md,text/markdown" />
         </section>
 
-        <section aria-labelledby="missing-heading">
-          <h2 id="missing-heading">Missing fields</h2>
-          <p id="missing-summary">Drop a markdown file to begin.</p>
-        </section>
+        <form id="article-form">
+          <section aria-labelledby="author-heading">
+            <h2 id="author-heading">Author</h2>
+            <p>
+              <label>
+                author
+                <select name="author" id="field-author">
+                  <option value="">— select team member —</option>
+                </select>
+              </label>
+            </p>
+          </section>
 
-        <section aria-labelledby="checklist-heading">
-          <h2 id="checklist-heading">Field checklist</h2>
-          <ul id="field-checklist"></ul>
-        </section>
+          <section aria-labelledby="internal-heading">
+            <h2 id="internal-heading">Internal Links</h2>
+            <fieldset>
+              <legend>internalLinks</legend>
+              <div id="internal-links"></div>
+              <button type="button" id="add-internal">Add internal link</button>
+            </fieldset>
+          </section>
 
-        <section aria-labelledby="form-heading">
-          <h2 id="form-heading">Fields</h2>
-          <form id="article-form">
+          <section aria-labelledby="external-heading">
+            <h2 id="external-heading">External Links</h2>
+            <fieldset>
+              <legend>externalLinks</legend>
+              <div id="external-links"></div>
+              <button type="button" id="add-external">Add external link</button>
+            </fieldset>
+          </section>
+
+          <section aria-labelledby="images-heading">
+            <h2 id="images-heading">Images</h2>
+            <p>Up to 3. Max 10MB each. First image is the hero.</p>
+            <p id="image-status"></p>
+            <div id="image-drop" tabindex="0" role="button" aria-label="Image drop zone">
+              <p>Drop images here</p>
+            </div>
+            <input type="file" id="image-file" accept="image/*" multiple />
+          </section>
+
+          <section aria-labelledby="missing-heading">
+            <h2 id="missing-heading">Missing fields</h2>
+            <p id="missing-summary">Drop a markdown file to begin.</p>
+          </section>
+
+          <section aria-labelledby="checklist-heading">
+            <h2 id="checklist-heading">Field checklist</h2>
+            <ul id="field-checklist"></ul>
+          </section>
+
+          <section aria-labelledby="form-heading">
+            <h2 id="form-heading">Fields</h2>
             <p>
               <label>
                 title
@@ -87,14 +127,6 @@
               <label>
                 updatedDate
                 <input type="date" name="updatedDate" id="field-updatedDate" />
-              </label>
-            </p>
-            <p>
-              <label>
-                author
-                <select name="author" id="field-author">
-                  <option value="">— select team member —</option>
-                </select>
               </label>
             </p>
             <p>
@@ -186,18 +218,6 @@
             </p>
 
             <fieldset>
-              <legend>internalLinks</legend>
-              <div id="internal-links"></div>
-              <button type="button" id="add-internal">Add internal link</button>
-            </fieldset>
-
-            <fieldset>
-              <legend>externalLinks</legend>
-              <div id="external-links"></div>
-              <button type="button" id="add-external">Add external link</button>
-            </fieldset>
-
-            <fieldset>
               <legend>faqs (optional)</legend>
               <div id="faqs"></div>
               <button type="button" id="add-faq">Add FAQ</button>
@@ -209,18 +229,8 @@
                 <textarea name="body" id="field-body" rows="12"></textarea>
               </label>
             </p>
-          </form>
-        </section>
-
-        <section aria-labelledby="images-heading">
-          <h2 id="images-heading">Images</h2>
-          <p>Up to 3. Max 10MB each. First image is the hero.</p>
-          <p id="image-status"></p>
-          <div id="image-drop" tabindex="0" role="button" aria-label="Image drop zone">
-            <p>Drop images here</p>
-          </div>
-          <input type="file" id="image-file" accept="image/*" multiple />
-        </section>
+          </section>
+        </form>
 
         <section aria-labelledby="actions-heading">
           <h2 id="actions-heading">Actions</h2>

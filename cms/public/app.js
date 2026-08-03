@@ -432,9 +432,12 @@ async function loadArticleList() {
       const li = document.createElement("li");
       li.innerHTML = `
         <a href="#" data-slug="${a.slug}">${a.title}</a>
-        [${a.draft ? "draft" : "published"}]
-        <button type="button" data-unpublish="${a.slug}">${a.draft ? "Publish" : "Unpublish"}</button>
-        <button type="button" data-delete="${a.slug}">Delete</button>
+        <span class="article-status">[${a.draft ? "draft" : "published"}]</span>
+        <span class="article-actions">
+          <button type="button" class="btn-compact" data-edit="${a.slug}">Edit</button>
+          <button type="button" class="btn-compact" data-unpublish="${a.slug}">${a.draft ? "Publish" : "Unpublish"}</button>
+          <button type="button" class="btn-compact" data-delete="${a.slug}">Delete</button>
+        </span>
       `;
       ul.appendChild(li);
     }
@@ -442,6 +445,11 @@ async function loadArticleList() {
       a.addEventListener("click", async (e) => {
         e.preventDefault();
         await loadExisting(a.dataset.slug);
+      });
+    });
+    ul.querySelectorAll("[data-edit]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        await loadExisting(btn.getAttribute("data-edit"));
       });
     });
     ul.querySelectorAll("[data-unpublish]").forEach((btn) => {

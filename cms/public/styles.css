@@ -216,11 +216,35 @@ ul {
   color: var(--color-accent);
 }
 
+#article-list li,
 #team-list li {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: calc(var(--space) * 2);
+}
+
+#article-list .article-status {
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+
+#article-list .article-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--space) * 1.5);
+  margin-left: auto;
+}
+
+#article-list .btn-compact,
+#team-list .btn-compact,
+button.btn-compact {
+  min-height: 28px;
+  padding: calc(var(--space) * 1) calc(var(--space) * 2.5);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-small);
+  line-height: 1.2;
 }
 
 #actions-heading ~ button + button,
