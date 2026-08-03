@@ -4,6 +4,10 @@
 
 ## Articles
 
+- [How to Search for Investors by Location: A Database Guide](https://www.heyrupert.com/articles/how-to-find-investors-by-location/): Filter investor databases by city, stage, and sector to build a geo-targeted list of 30–80 investors who are actually likely to fund your company.
 - [How to Find the Right Investors: A Complete Founder's Guide](https://www.heyrupert.com/articles/how-to-find-investors/): Everything founders need to know about how to find investors: type, targeting, warm intros, cold outreach, and pipeline management to close your round.
+- [Investors Near Me: The Founder's Guide to Local Capital](https://www.heyrupert.com/articles/investors-near-me/): Learn how to find local angel investors, regional VCs, and nearby funding networks — and how to approach them with outreach that actually gets a response.
+- [Local vs. National Investors: Which Should You Target First?](https://www.heyrupert.com/articles/local-investors-vs-national-investors-for-startups/): Should founders build local investor relationships first, or go straight to national VCs? Learn the real trade-offs and how to sequence your raise.
 - [Pitch Deck: The Complete Founder's Guide to Raising Capital](https://www.heyrupert.com/articles/pitch-deck/): What founders need to know about pitch decks: what to include, how to structure slides by stage, and how to get it in front of the right investors.
+- [Private Investors Near Me: Find Local Angels and HNIs Fast](https://www.heyrupert.com/articles/private-investors-near-me/): Angel investors, HNIs, and family offices rarely advertise. This guide shows early-stage founders exactly where private investors are and how to reach them.
 - [How Technical SEO and E-E-A-T Shape Modern Content Sites](https://www.heyrupert.com/articles/technical-seo-eeat-content-sites/): A practical walkthrough of fields, schemas, and linking patterns that help static content sites earn trust with search engines and answer engines.

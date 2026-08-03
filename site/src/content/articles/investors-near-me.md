@@ -18,7 +18,7 @@ robots: index, follow
 schemaType: BlogPosting
 locale: en-US
 twitterCard: summary_large_image
-draft: true
+draft: false
 keywords:
   - investors near me
   - how to find investors
