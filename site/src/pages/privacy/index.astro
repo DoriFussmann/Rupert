@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../config/site";
+import { sitePath } from "../../lib/url";
+
+const title = `Privacy Policy — ${SITE_NAME}`;
+const description =
+  "Privacy Policy for Rupert. Placeholder page pending final legal language from counsel or a template service.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/privacy/">
+  <section aria-labelledby="privacy-heading" class="max-w-prose">
+    <h1 id="privacy-heading" class="m-0 text-h1 text-ink">Privacy Policy</h1>
+    <div
+      class="mt-8 flex min-h-40 items-center justify-center rounded-xl border border-dashed border-line bg-soft px-4 py-8 text-center text-small text-muted"
+      role="note"
+    >
+      [PLACEHOLDER: Replace with real Privacy Policy from legal counsel or a
+      template service]
+    </div>
+    <p class="mt-8 mb-0 text-small text-muted">
+      Questions in the meantime:
+      {" "}
+      <a href={sitePath("/contact/")} class="link-body">Contact</a>.
+    </p>
+  </section>
+</BaseLayout>

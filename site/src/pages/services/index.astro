@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../config/site";
+import { sitePath } from "../../lib/url";
+
+const services = (
+  await Promise.all(
+    (await getCollection("services"))
+      .filter((s) => !s.data.draft)
+      .sort((a, b) => a.data.order - b.data.order)
+      .map(async (service) => {
+        const { Content } = await render(service);
+        return { service, Content };
+      }),
+  )
+);
+
+const title = `Services — ${SITE_NAME}`;
+const description =
+  "Expert-managed investor outreach for founders raising capital — researched lists, personalized messaging, and full ownership of every relationship.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/services/">
+  <section aria-labelledby="services-heading">
+    <h1 id="services-heading" class="m-0 mb-4 text-h1 text-ink">Services</h1>
+    <p class="m-0 mb-8 max-w-prose text-body text-secondary">
+      Rupert runs researched, personalized investor outreach on behalf of
+      founders. Every engagement is built around genuine fit — and you keep every
+      conversation.
+    </p>
+
+    {
+      services.length === 0 ? (
+        <p class="m-0 text-body text-muted">No services published yet.</p>
+      ) : (
+        <ul class="m-0 flex list-none flex-col gap-4 p-0">
+          {services.map(({ service, Content }) => (
+            <li id={service.data.slug} class="card overflow-hidden">
+              <article>
+                <div class="card-header border-b border-line">
+                  <h2 class="m-0 text-h3 text-ink">{service.data.title}</h2>
+                </div>
+                <div class="card-body">
+                  <p class="m-0 text-body text-secondary">
+                    {service.data.summary}
+                  </p>
+                  <div class="article-body mt-4">
+                    <Content />
+                  </div>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <p class="mt-10 mb-0 max-w-prose text-body text-secondary">
+      Ready to talk through fit for your raise?
+      {" "}
+      <a href={sitePath("/contact/")} class="link-body">Contact Rupert</a>.
+    </p>
+  </section>
+</BaseLayout>

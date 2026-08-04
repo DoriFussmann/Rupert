@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../config/site";
+
+const title = `Testimonials — ${SITE_NAME}`;
+const description =
+  "Client testimonials for Rupert's expert-managed investor outreach. Real quotes will be published here when available.";
+
+const slots = [
+  "[PLACEHOLDER: Real client testimonial needed here — do not publish with fabricated content. Include: founder name, company, role, and a short quote about working with Rupert on investor outreach.]",
+  "[PLACEHOLDER: Real client testimonial needed here — do not publish with fabricated content. Include: founder name, company, role, and a short quote about working with Rupert on investor outreach.]",
+  "[PLACEHOLDER: Real client testimonial needed here — do not publish with fabricated content. Include: founder name, company, role, and a short quote about working with Rupert on investor outreach.]",
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/testimonials/"
+>
+  <section aria-labelledby="testimonials-heading">
+    <h1 id="testimonials-heading" class="m-0 mb-4 text-h1 text-ink">
+      Testimonials
+    </h1>
+    <p class="m-0 mb-8 max-w-prose text-body text-secondary">
+      Founder feedback will appear here once clients have approved quotes for
+      publication. Nothing on this page should be treated as live social proof
+      until real testimonials replace the placeholders below.
+    </p>
+
+    <ul class="m-0 grid list-none gap-4 p-0 md:grid-cols-1">
+      {
+        slots.map((label) => (
+          <li class="card overflow-hidden">
+            <div class="card-body">
+              <div
+                class="flex min-h-32 items-center justify-center rounded-xl border border-dashed border-line bg-soft px-4 py-6 text-center text-small text-muted"
+                role="note"
+              >
+                {label}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../config/site";
+import { sitePath } from "../../lib/url";
+
+const founders = (await getCollection("team"))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const title = `About — ${SITE_NAME}`;
+const description =
+  "Rupert exists so founders can run precise, expert-managed investor outreach without giving up visibility, ownership, or the relationships that matter.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/about/">
+  <article class="max-w-prose">
+    <h1 class="m-0 text-h1 text-ink">About</h1>
+
+    <section aria-labelledby="story-heading" class="mt-8">
+      <h2 id="story-heading" class="m-0 text-h2 text-ink">Why Rupert exists</h2>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Raising capital is relationship work. Most founders know this, yet end up
+        choosing between generic automated campaigns and exhausting DIY outreach
+        that competes with running the company. Rupert was built for a third
+        path: expert-managed investor outreach with institutional discipline,
+        without the founder surrendering visibility or ownership.
+      </p>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Rather than relying on mass lists or templated sequences, every Rupert
+        engagement is researched, written, and managed to reach investors who
+        actively back companies like yours — stage, sector, and thesis aligned.
+        The goal is not volume for its own sake. It is fit, clarity, and
+        conversations worth having.
+      </p>
+    </section>
+
+    <section aria-labelledby="philosophy-heading" class="mt-16">
+      <h2 id="philosophy-heading" class="m-0 text-h2 text-ink">
+        How we think about the work
+      </h2>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Outreach should feel like a seasoned operator wrote it — because one did.
+        Precision beats volume. Personalization is not a merge field; it is the
+        product of research. Follow-up is a craft, not a drip. And the founder
+        always remains the principal in every relationship.
+      </p>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Throughout the process you have complete transparency into every email,
+        every conversation, and every response. Rupert never owns your
+        relationships or takes a percentage of your raise. You keep every
+        investor connection, while benefiting from the discipline, experience,
+        and craftsmanship of a professional fundraising operator.
+      </p>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        For the operational detail of an engagement, see
+        <a href={sitePath("/services/")} class="link-body">Services</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="founder-heading" class="mt-16">
+      <h2 id="founder-heading" class="m-0 text-h2 text-ink">Founder</h2>
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Rupert is led by operators with institutional dealmaking backgrounds who
+        treat founder-led fundraising with the same care they would bring to a
+        banker's desk — then hand every relationship back to the founder.
+      </p>
+      {
+        founders.length === 0 ? (
+          <p class="mt-4 mb-0 text-body text-muted">
+            Team profiles will appear here once published.
+          </p>
+        ) : (
+          <ul class="mt-6 mb-0 flex list-none flex-col gap-2 p-0">
+            {founders.map((member) => (
+              <li class="card overflow-hidden">
+                <a
+                  href={sitePath(`/team/#${member.data.slug}`)}
+                  class="card-header flex min-h-11 flex-col gap-1 no-underline"
+                >
+                  <span class="text-small text-ink">{member.data.name}</span>
+                  <span class="text-small text-muted">{member.data.role}</span>
+                  {member.data.credentials && (
+                    <span class="text-small text-muted">
+                      {member.data.credentials}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      <p class="mt-4 mb-0 text-body text-secondary">
+        Full bios live on the
+        {" "}
+        <a href={sitePath("/team/")} class="link-body">Team</a>
+        {" "}
+        page.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

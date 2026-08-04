@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { CONTACT_EMAIL, SITE_NAME } from "../../config/site";
+
+const title = `Contact — ${SITE_NAME}`;
+const description =
+  "Contact Rupert about expert-managed investor outreach. Reach the team by email to discuss fit for your raise.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/contact/">
+  <section aria-labelledby="contact-heading" class="max-w-prose">
+    <h1 id="contact-heading" class="m-0 text-h1 text-ink">Contact</h1>
+    <p class="mt-4 mb-0 text-body text-secondary">
+      If you are raising capital and want researched, personalized investor
+      outreach managed by an experienced operator — with full visibility and
+      ownership of every relationship — reach out directly.
+    </p>
+
+    <div class="card mt-8 overflow-hidden">
+      <div class="card-header border-b border-line">
+        <h2 class="m-0 text-small text-ink">Email</h2>
+      </div>
+      <div class="card-body">
+        <p class="m-0 text-body text-secondary">
+          <a href={`mailto:${CONTACT_EMAIL}`} class="link-body">
+            {CONTACT_EMAIL}
+          </a>
+        </p>
+        <p class="mt-3 mb-0 text-small text-muted">
+          Prefer a short note on your company, stage, and raise timing. That
+          context helps a useful first reply.
+        </p>
+      </div>
+    </div>
+
+    {/*
+      Decision point: a static contact form needs a form-handling service
+      (e.g. Formspree, Netlify Forms, or similar). No backend is configured
+      for this site yet, so this page defaults to mailto rather than guessing
+      a provider. Wire a form here once a service is chosen.
+    */}
+    <p class="mt-8 mb-0 text-small text-muted">
+      A contact form is not configured yet. Static sites need a form-handling
+      service (for example Formspree or Netlify Forms) before a form can submit
+      reliably — choose a provider if you want that path instead of email.
+    </p>
+  </section>
+</BaseLayout>

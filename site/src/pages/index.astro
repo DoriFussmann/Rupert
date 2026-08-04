@@ -10,6 +10,10 @@ const howItWorks = [
   "You own every conversation and every relationship.",
 ];
 
+const services = (await getCollection("services"))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
 const articles = (await getCollection("articles"))
   .filter((a) => !a.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -52,6 +56,36 @@ const description =
     </ol>
   </section>
 
+  <section aria-labelledby="services-heading" class="mt-16">
+    <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+      <h2 id="services-heading" class="m-0 text-h2 text-ink">Services</h2>
+      <a href={sitePath("/services/")} class="link-body text-small">
+        View all services
+      </a>
+    </div>
+    {
+      services.length === 0 ? (
+        <p class="m-0 text-body text-muted">No services published yet.</p>
+      ) : (
+        <ul class="m-0 flex list-none flex-col gap-3 p-0">
+          {services.map((service) => (
+            <li class="card overflow-hidden">
+              <a
+                href={sitePath(`/services/#${service.data.slug}`)}
+                class="card-header flex min-h-11 flex-col gap-1 no-underline"
+              >
+                <span class="text-small text-ink">{service.data.title}</span>
+              </a>
+              <div class="card-body border-t border-line">
+                <p class="m-0 text-small text-secondary">{service.data.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
   <section aria-labelledby="latest-heading" class="mt-16">
     <h2 id="latest-heading" class="m-0 mb-6 text-h2 text-ink">
       Latest Articles
@@ -87,5 +121,23 @@ const description =
         </ul>
       )
     }
+  </section>
+
+  <section aria-labelledby="cta-heading" class="mt-16">
+    <div class="card overflow-hidden">
+      <div class="card-body max-w-prose">
+        <h2 id="cta-heading" class="m-0 text-h2 text-ink">
+          Start a conversation
+        </h2>
+        <p class="mt-3 mb-0 text-body text-secondary">
+          If you are raising and want researched, personalized investor outreach
+          managed on your behalf — with every relationship remaining yours —
+          get in touch.
+        </p>
+        <p class="mt-6 mb-0">
+          <a href={sitePath("/contact/")} class="btn">Contact</a>
+        </p>
+      </div>
+    </div>
   </section>
 </BaseLayout>

@@ -1,6 +1,18 @@
 ---
 import { SITE_NAME } from "../config/site";
 import { sitePath, absoluteUrl } from "../lib/url";
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about/", label: "About" },
+  { href: "/services/", label: "Services" },
+  { href: "/articles/", label: "Articles" },
+  { href: "/team/", label: "Team" },
+  { href: "/testimonials/", label: "Testimonials" },
+  { href: "/contact/", label: "Contact" },
+  { href: "/privacy/", label: "Privacy" },
+  { href: "/terms/", label: "Terms" },
+];
 ---
 
 <footer class="mt-16 border-t border-line bg-background">
@@ -14,15 +26,15 @@ import { sitePath, absoluteUrl } from "../lib/url";
     </p>
     <nav aria-label="Footer">
       <ul class="m-0 flex list-none flex-wrap items-center gap-1 p-0">
-        <li>
-          <a href={sitePath("/")} class="nav-item">Home</a>
-        </li>
-        <li>
-          <a href={sitePath("/articles/")} class="nav-item">Articles</a>
-        </li>
-        <li>
-          <a href={sitePath("/team/")} class="nav-item">Team</a>
-        </li>
+        {
+          links.map((link) => (
+            <li>
+              <a href={sitePath(link.href)} class="nav-item">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
         <li>
           <a href={absoluteUrl("/rss.xml")} class="nav-item">RSS</a>
         </li>
