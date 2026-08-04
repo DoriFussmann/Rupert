@@ -6,3 +6,4 @@ cms/.staging/
 *.log
 .env
 .env.*
+.vercel
