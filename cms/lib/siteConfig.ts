@@ -5,6 +5,7 @@ export interface SiteIdentity {
   SITE_URL: string;
   SITE_NAME: string;
   SAME_AS: string[];
+  CONTACT_EMAIL: string;
 }
 
 function extractStringConst(source: string, name: string): string {
@@ -18,11 +19,28 @@ function extractStringConst(source: string, name: string): string {
   return match[1];
 }
 
+function extractStringArrayConst(source: string, name: string): string[] {
+  const re = new RegExp(
+    `export\\s+const\\s+${name}\\s*:\\s*string\\[\\]\\s*=\\s*\\[([\\s\\S]*?)\\]`,
+  );
+  const match = source.match(re);
+  if (!match) {
+    throw new Error(`Could not parse ${name} from site config.`);
+  }
+  const urls: string[] = [];
+  for (const m of match[1].matchAll(/["'`]([^"'`]+)["'`]/g)) {
+    urls.push(m[1]);
+  }
+  return urls;
+}
+
 export function readSiteIdentity(): SiteIdentity {
   const source = fs.readFileSync(SITE_CONFIG_PATH, "utf8");
   const SITE_URL = extractStringConst(source, "SITE_URL");
   const SITE_NAME = extractStringConst(source, "SITE_NAME");
-  return { SITE_URL, SITE_NAME, SAME_AS: [] };
+  const SAME_AS = extractStringArrayConst(source, "SAME_AS");
+  const CONTACT_EMAIL = extractStringConst(source, "CONTACT_EMAIL");
+  return { SITE_URL, SITE_NAME, SAME_AS, CONTACT_EMAIL };
 }
 
 export function absoluteUrl(path: string, siteUrl?: string): string {

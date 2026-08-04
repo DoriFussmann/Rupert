@@ -72,7 +72,7 @@ function main() {
   const lines = [
     `# ${SITE_NAME}`,
     "",
-    `> ${SITE_NAME} publishes practical articles on technical SEO, E-E-A-T, and AI-search visibility.`,
+    `> ${SITE_NAME} is expert-managed investor outreach for startup founders raising capital. This site publishes founder-focused guides on fundraising strategy, investor discovery, pitch decks, and deal mechanics.`,
     "",
     "## Articles",
     "",

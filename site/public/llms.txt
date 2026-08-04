@@ -1,6 +1,6 @@
 # Rupert
 
-> Rupert publishes practical articles on technical SEO, E-E-A-T, and AI-search visibility.
+> Rupert is expert-managed investor outreach for startup founders raising capital. This site publishes founder-focused guides on fundraising strategy, investor discovery, pitch decks, and deal mechanics.
 
 ## Articles
 
@@ -14,4 +14,3 @@
 - [Local vs. National Investors: Which Should You Target First?](https://www.heyrupert.com/articles/local-investors-vs-national-investors-for-startups/): Should founders build local investor relationships first, or go straight to national VCs? Learn the real trade-offs and how to sequence your raise.
 - [Pitch Deck: The Complete Founder's Guide to Raising Capital](https://www.heyrupert.com/articles/pitch-deck/): What founders need to know about pitch decks: what to include, how to structure slides by stage, and how to get it in front of the right investors.
 - [Private Investors Near Me: Find Local Angels and HNIs Fast](https://www.heyrupert.com/articles/private-investors-near-me/): Angel investors, HNIs, and family offices rarely advertise. This guide shows early-stage founders exactly where private investors are and how to reach them.
-- [How Technical SEO and E-E-A-T Shape Modern Content Sites](https://www.heyrupert.com/articles/technical-seo-eeat-content-sites/): A practical walkthrough of fields, schemas, and linking patterns that help static content sites earn trust with search engines and answer engines.

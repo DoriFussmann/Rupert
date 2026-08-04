@@ -18,7 +18,7 @@ robots: index, follow
 schemaType: BlogPosting
 locale: en-US
 twitterCard: summary_large_image
-draft: false
+draft: true
 keywords:
   - answer engine optimization
   - json-ld
