@@ -5,9 +5,15 @@ import { ARTICLES_DIR, LLMS_TXT_PATH } from "./paths.js";
 import type { ArticleFrontmatter } from "./schema.js";
 import { absoluteUrl, readSiteIdentity } from "./siteConfig.js";
 
+const SITE_DESCRIPTION = [
+  "Rupert is an expert-led investor outreach service designed for founders raising capital. Rather than relying on automated campaigns or generic investor lists, every outreach effort is researched, written, and managed with precision to reach investors who actively back companies like yours.",
+  "",
+  "Throughout the process, you have complete transparency into every email, every conversation, and every response. Rupert never owns your relationships or takes a percentage of your raise. You keep every investor connection, while benefiting from the discipline, experience, and craftsmanship of a professional fundraising operator.",
+].join("\n");
+
 /**
  * Rebuilds public/llms.txt from all non-draft articles.
- * H1 = SITE_NAME, one-line blockquote, then H2 list of articles.
+ * H1 = SITE_NAME, site description blockquote, then H2 list of articles.
  */
 export function generateLlmsTxt(): string {
   const { SITE_NAME } = readSiteIdentity();
@@ -31,10 +37,14 @@ export function generateLlmsTxt(): string {
     return db - da;
   });
 
+  const descriptionQuote = SITE_DESCRIPTION.split("\n")
+    .map((line) => (line.length === 0 ? ">" : `> ${line}`))
+    .join("\n");
+
   const lines: string[] = [
     `# ${SITE_NAME}`,
     "",
-    `> ${SITE_NAME} is expert-managed investor outreach for startup founders raising capital. This site publishes founder-focused guides on fundraising strategy, investor discovery, pitch decks, and deal mechanics.`,
+    descriptionQuote,
     "",
     "## Articles",
     "",

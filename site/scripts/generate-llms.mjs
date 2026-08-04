@@ -69,10 +69,20 @@ function main() {
     (a, b) => new Date(b.date || 0).valueOf() - new Date(a.date || 0).valueOf(),
   );
 
+  const siteDescription = [
+    "Rupert is an expert-led investor outreach service designed for founders raising capital. Rather than relying on automated campaigns or generic investor lists, every outreach effort is researched, written, and managed with precision to reach investors who actively back companies like yours.",
+    "",
+    "Throughout the process, you have complete transparency into every email, every conversation, and every response. Rupert never owns your relationships or takes a percentage of your raise. You keep every investor connection, while benefiting from the discipline, experience, and craftsmanship of a professional fundraising operator.",
+  ].join("\n");
+  const descriptionQuote = siteDescription
+    .split("\n")
+    .map((line) => (line.length === 0 ? ">" : `> ${line}`))
+    .join("\n");
+
   const lines = [
     `# ${SITE_NAME}`,
     "",
-    `> ${SITE_NAME} is expert-managed investor outreach for startup founders raising capital. This site publishes founder-focused guides on fundraising strategy, investor discovery, pitch decks, and deal mechanics.`,
+    descriptionQuote,
     "",
     "## Articles",
     "",

@@ -61,6 +61,7 @@ const team = defineCollection({
       credentials: z.string().optional(),
       photo: image(),
       sameAs: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
     }),
 });
 
@@ -71,6 +72,7 @@ const services = defineCollection({
     slug: z.string(),
     summary: z.string(),
     order: z.number(),
+    draft: z.boolean().default(false),
   }),
 });
 
