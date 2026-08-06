@@ -13,7 +13,7 @@ tags:
   - deck investor relations
   - investor presentation
   - startup funding
-image: ../../assets/articles/deck-investor-relations/hero.webp
+image: ../../assets/articles/deck-investor-relations/hero.png
 imageAlt: Two versions of a startup deck side by side on a desk — a lean visual pitch deck and a detailed investor relations document with financial charts
 robots: index, follow
 schemaType: BlogPosting
@@ -24,6 +24,14 @@ keywords:
   - deck investor relations
   - investor presentation
   - pitch deck
+internalLinks:
+  - label: "The Investor Presentation: Slides, Structure, and Strategy"
+    url: https://www.heyrupert.com/articles/investor-presentation/
+  - label: "Investor Presentation Template: Your Slide-by-Slide Guide"
+    url: https://www.heyrupert.com/articles/investor-presentation-template/
+externalLinks:
+  - label: Sequoia Writing a Business Plan
+    url: https://sequoiacap.com/article/writing-a-business-plan/
 faqs:
   - question: What is the main difference between a pitch deck and an investor deck?
     answer: A pitch deck is a story-first, visually concise document — typically 10–15 slides — designed to spark curiosity and earn a first meeting. An investor deck (also called a full deck or investor relations deck) is a detail-first document built to support an investment decision, containing expanded financial projections, bottom-up market modeling, risk factors, and competitive analysis. The pitch deck opens the door; the investor deck helps an investor walk through it.
